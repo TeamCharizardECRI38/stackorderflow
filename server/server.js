@@ -2,6 +2,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
+const controller = require('./controllers/linkController');
+const projectRouter = require('./routes/projectRoutes');
 // const credentialController = require('./controllers/credentialController');
 // const jwt = require('jsonwebtoken');
 
@@ -29,6 +31,9 @@ app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, '../src')));
 
 app.use('/api', apiRouter);
+app.use('/projects', projectRouter);
+
+controller.scrapeLink();
 
 //Define Route handlers Here
 //---------------
