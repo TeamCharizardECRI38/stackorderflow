@@ -18,6 +18,12 @@ function Login() {
 
         <h1>Login</h1>
         <div className="loginContainer">
+            <form>
+                <label>Username:   </label>
+            <input id='username' type='text' name='username' onChange={e => setUsername(e.target.value)}/>
+            <label>Password:   </label>
+            <input id='password' type='text' name='password' onChange={e => setPassword(e.target.value)}/>
+            </form>
             <p>No Account Yet? <a key="link" href="/#/signup">
             Sign Up Here!
             </a></p>
