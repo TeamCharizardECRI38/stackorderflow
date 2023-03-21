@@ -1,3 +1,8 @@
+import { Route, Routes } from "react-router-dom";
+// import SignUp from './SignUp';
+import Login from "./Login";
+import Dash from "./Dash";
+import "./App.css";
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./SignUp";
@@ -14,32 +19,8 @@ function App() {
     <div>
       <Routes>
         <Route exact path="/" element={<Login />} />
-        <Route
-          path="/signup"
-          element={
-            <SignUp
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-            />
-          }
-        ></Route>
-        <Route
-          path="/dash"
-          element={
-            isLoggedIn ? (
-              <Dash
-                userInfo={userInfo}
-                setUserInfo={setUserInfo}
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-              />
-            ) : (
-              <Login />
-            )
-          }
-        ></Route>
+        {/* <Route path="/signup" element={<SignUp />}></Route> */}
+        <Route path="/dash" element={<Dash />}></Route>
       </Routes>
     </div>
   );
