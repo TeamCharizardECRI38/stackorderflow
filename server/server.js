@@ -33,7 +33,7 @@ app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', apiRouter);
 app.use('/projects', projectRouter);
 
-controller.scrapeLink();
+// controller.scrapeLink();
 
 //Define Route handlers Here
 //---------------

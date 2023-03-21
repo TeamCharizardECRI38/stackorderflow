@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 const linkControllers = {
   createLink: async (req, res, next) => {
     try {
-      const { link, comment, tags, favorite } = req.body;
+      const { link, comment, tags } = req.body;
       const { title, topAnswer } = res.locals;
 
       const linkObj = await Links.create({
@@ -13,7 +13,7 @@ const linkControllers = {
         Link: link,
         Comment: comment,
         Tags: tags,
-        Favorite: favorite,
+        // Favorite: favorite,
         TopAnswer: topAnswer,
       });
       res.locals.linkObj = linkObj;
@@ -31,34 +31,7 @@ const linkControllers = {
       return next(errMessage);
     }
   },
-  addLinkToProject: async (req, res, next) => {
-    try {
-      const { link } = res.locals.linkObj;
-      const { id } = res.locals.projectId;
 
-      const project = await Projects.findOneAndUpdate(
-        { _id: id },
-        {
-          $push: {
-            Links: link,
-          },
-        },
-        { new: true }
-      );
-      res.locals.project = project;
-      return next();
-    } catch (err) {
-      const errMessage = {
-        log: `Express error handler caught addLinkToProject error: ${err}`,
-        status: 400,
-        message: {
-          err: 'An error adding a new link to a project occurred',
-        },
-      };
-
-      return next(errMessage);
-    }
-  },
   updateLink: async (req, res, next) => {
     try {
       const { id, comment, tags, favorite } = req.body;
@@ -72,6 +45,7 @@ const linkControllers = {
         { new: true }
       );
       res.locals.updatedLinkObj = updatedLink;
+      res.locals.updatedLinkId = updatedLink._id.toString();
       return next();
     } catch (err) {
       const errMessage = {
@@ -84,17 +58,11 @@ const linkControllers = {
       return next(errMessage);
     }
   },
-  updateLinkInProject: async (req, res, next) => {
-    const link = res.locals.updatedLinkObj;
-    const projectId = req.body.projectId;
-    const linkId = req.body.id;
-  },
   deleteLink: async (req, res, next) => {},
   getLink: async (req, res, next) => {},
   scrapeLink: async (req, res, next) => {
     try {
-      const url =
-        'https://stackoverflow.com/questions/35181989/how-to-remove-the-hash-from-the-url-in-react-router';
+      const url = req.body.link;
       const website = await axios(url);
       const $ = cheerio.load(website.data);
       const title = $('h1 > a').text();
@@ -111,6 +79,24 @@ const linkControllers = {
         status: 400,
         message: {
           err: 'An error scraping data from the provided link occurred',
+        },
+      };
+
+      return next(errMessage);
+    }
+  },
+  deleteLink: async (req, res, next) => {
+    try {
+      const id = req.body.linkId;
+      const deletedLink = await Links.findByIdAndRemove(id);
+      res.locals.deletedLink = deletedLink;
+      return next();
+    } catch (err) {
+      const errMessage = {
+        log: `Express error handler caught deleteLink error: ${err}`,
+        status: 400,
+        message: {
+          err: 'An deleting the link occurred',
         },
       };
 
