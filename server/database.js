@@ -1,12 +1,12 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const mongoose = require('mongoose');
-const fs = require('fs');
-require('dotenv').config();
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const mongoose = require("mongoose");
+const fs = require("fs");
+require("dotenv").config();
 // const client = new MongoClient(process.env.MONGO_URI);
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to Mongo DB.'))
+  .then(() => console.log("Connected to Mongo DB."))
   .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
@@ -41,9 +41,10 @@ const linkSchema = new Schema({
   Comment: { type: String },
   Tags: { type: Array },
   Favorite: { type: Boolean },
+  TopAnswer: { type: String },
 });
 
-const Projects = mongoose.model('Projects', projectSchema);
-const Users = mongoose.model('Users', userSchema);
-const Links = mongoose.model('Links', linkSchema);
+const Projects = mongoose.model("Projects", projectSchema);
+const Users = mongoose.model("Users", userSchema);
+const Links = mongoose.model("Links", linkSchema);
 module.exports = { Users, Links, Projects };
