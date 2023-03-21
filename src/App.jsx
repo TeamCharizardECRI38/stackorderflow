@@ -25,7 +25,21 @@ function App() {
             />
           }
         ></Route>
-        <Route path="/dash" element={isLoggedIn ? <Dash /> : <Login />}></Route>
+        <Route
+          path="/dash"
+          element={
+            isLoggedIn ? (
+              <Dash
+                userInfo={userInfo}
+                setUserInfo={setUserInfo}
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+              />
+            ) : (
+              <Login />
+            )
+          }
+        ></Route>
       </Routes>
     </div>
   );
