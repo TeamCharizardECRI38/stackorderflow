@@ -6,9 +6,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "node server/server.js"
+    "server": "node server/server.js",
+    "fulldev": "concurrently \"nodemon server/server.js\" \"vite\""
   },
   "dependencies": {
+    "concurrently": "^7.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
