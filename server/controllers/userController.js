@@ -1,4 +1,5 @@
 const { Users } = require('../database');
+require('dotenv').config();
 
 userControllers = {
   createUser: async (req, res, next) => {
@@ -17,4 +18,5 @@ userControllers = {
   },
   loginUser: async (req, res, next) => {},
   checkDuplicates: async (req, res, next) => {},
+  encryptUserData: async (req, res, next) => {},
 };
