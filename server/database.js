@@ -41,6 +41,7 @@ const linkSchema = new Schema({
   Comment: { type: String },
   Tags: { type: Array },
   Favorite: { type: Boolean },
+  TopAnswer: { type: String },
 });
 
 const Projects = mongoose.model("Projects", projectSchema);
