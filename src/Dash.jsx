@@ -57,6 +57,7 @@ function Dash(props) {
     <div className="dash">
       <h1>Dash</h1>
       <InputContainer
+        top
         userInfo={userInfo}
         projects={projects}
         tags={tags}

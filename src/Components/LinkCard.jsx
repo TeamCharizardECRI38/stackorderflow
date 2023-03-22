@@ -1,6 +1,6 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import parse from 'html-react-parser';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import parse from "html-react-parser";
 
 function LinkCard(props) {
   // const { projects, links, tags } = props;
@@ -11,7 +11,7 @@ function LinkCard(props) {
   });
 
   return (
-    <Card variant='outlined' id={props.linkid}>
+    <Card variant="outlined" id={props.linkid}>
       <h2>{props.title}</h2>
       <div> {parse(JSON.parse(props.topAnswer))}</div>
       <ul>{tags}</ul>
@@ -20,7 +20,6 @@ function LinkCard(props) {
       </h5>
     </Card>
   );
-
 }
 
 //   const linkInfo = {
