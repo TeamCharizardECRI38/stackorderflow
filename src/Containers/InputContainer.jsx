@@ -24,6 +24,7 @@ function InputContainer(props) {
       <h2>InputContainer</h2>
       <TextField
         //setup validation here
+        margin="normal"
         variant="outlined"
         id="stackOverflowLink"
         label="Paste link here"
@@ -43,6 +44,7 @@ function InputContainer(props) {
           }
           return filtered;
         }}
+        margin="normal"
         selectOnFocus
         clearOnBlur
         handleHomeEndKeys
@@ -61,13 +63,13 @@ function InputContainer(props) {
         renderInput={(params) => (
           <TextField
             {...params}
+            margin="normal"
             id="projects"
             label="Select a project, or add a new project here" //make it clear for users that they should add projs here
             variant="outlined"
           />
         )}
       />
-
       <Autocomplete
         multiple
         filterOptions={(options, params) => {
@@ -90,6 +92,7 @@ function InputContainer(props) {
           <TextField
             {...params}
             id="tags"
+            margin="normal"
             variant="outlined"
             label="Tags"
             placeholder="Favorites"
@@ -112,10 +115,12 @@ function InputContainer(props) {
             setInputComm(newInputValue);
           }}
           value={comm}
+          margin="normal"
           id="comments"
           label="Comments"
         />
         <ButtonUnstyled
+          margin="normal"
           onClick={(e) => {
             console.log(e);
             console.log(projects);

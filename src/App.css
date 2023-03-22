@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .logo {
@@ -45,6 +47,19 @@
   background-color: purple;
 }
 
+.LinkContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+.horizontal {
+  display: flex;
+  flex-direction: row;
+}
 /* .linkContainer {
   display: flex;
   background: lightcoral;
