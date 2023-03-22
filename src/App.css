@@ -40,3 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+.sidebarXButton {
+  background-color: purple;
+}
+
+/* .linkContainer {
+  display: flex;
+  background: lightcoral;
+}
+
+.linkCard {
+  flex: 3;
+  background-color: lightcoral;
+}
+
+.linkSidebar {
+  flex: 1;
+} */

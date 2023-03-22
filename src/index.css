@@ -67,3 +67,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* .linkContainer {
+  display: flex;
+  background-color: lightcoral;
+}
+
+.linkCard {
+  flex: 3;
+  background-color: lightcoral;
+}
+
+.linkSidebar {
+  flex: 1;
+} */
