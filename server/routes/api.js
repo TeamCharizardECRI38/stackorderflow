@@ -1,39 +1,70 @@
 const express = require("express");
 const router = express.Router();
+const jwtController = require("../controllers/jwtController");
 const { Users, Projects, Links } = require("../database");
+const jwt = require("jsonwebtoken");
 
-router.post("/", (req, res, next) => {
-  console.log("in user creator");
-  Users.create({
-    Name: req.body.username,
-    Password: req.body.password,
-  })
-    .then((user) => {
-      console.log("success");
-      return res.status(200).json(user);
+router.post(
+  "/",
+  (req, res, next) => {
+    console.log("in user creator");
+    Users.create({
+      Name: req.body.username,
+      Password: req.body.password,
     })
-    .catch((err) => {
-      console.log("something went wrong");
-      return next(err);
-    });
-});
+      .then((user) => {
+        console.log("success");
+        res.locals.userinfo = user;
+        return next();
+      })
+      .catch((err) => {
+        console.log("something went wrong");
+        return next(err);
+      });
+  },
+  jwtController.createJwt
+);
 
-router.post("/login", (req, res, next) => {
-  Users.findOne({
-    Name: req.body.username,
-  })
-    .then((user) => {
-      console.log("fetched user info");
-      if (req.body.password === req.body.password) res.status(200).json(user);
-      else {
-        res.status();
-      }
+router.post(
+  "/checkToken",
+  jwtController.authenticateToken,
+  (req, res, next) => {
+    Users.findOne({
+      Name: res.locals.user,
     })
-    .catch((err) => {
-      console.log("something went wrong");
-      return next(err);
-    });
-});
+      .then((user) => {
+        console.log("user " + user);
+        return res.status(200).json(user);
+      })
+      .catch((err) => {
+        console.log("something went wrong");
+        return next(err);
+      });
+  }
+);
+
+router.post(
+  "/login",
+  (req, res, next) => {
+    Users.findOne({
+      Name: req.body.username,
+    })
+      .then((user) => {
+        console.log("fetched user info: ", user);
+        if (req.body.password === user.Password) {
+          res.locals.userinfo = user;
+          return next();
+        } else {
+          res.status(400).json("Wrong password !");
+        }
+      })
+      .catch((err) => {
+        console.log("something went wrong");
+        return next(err);
+      });
+  },
+  jwtController.createJwt
+);
 
 router.get(
   "/addprojects",

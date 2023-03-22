@@ -53,6 +53,8 @@ const projectControllers = {
       //   res.locals.user = await user.populate('Projects');
       console.log("user", user);
       res.locals.user = user;
+      //   const projects = await user
+      //   console.log('user', projects);
       res.locals.projects = user.Projects;
       return next();
     } catch (err) {
@@ -93,7 +95,16 @@ const projectControllers = {
           $pull: { Links: req.body.linkId },
         },
         { new: true }
-      );
+      ).populate({
+        path: "Projects",
+        model: "Projects",
+        populate: [
+          {
+            path: "Links",
+            model: "Links",
+          },
+        ],
+      });
       res.locals.user = user;
       return next();
     } catch (err) {}

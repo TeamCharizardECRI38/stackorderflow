@@ -5,7 +5,16 @@ const userControllers = {
   findUser: async (req, res, next) => {
     try {
       const id = req.body.userId;
-      const user = await Users.findById(id);
+      const user = await Users.findById(id).populate({
+        path: 'Projects',
+        model: 'Projects',
+        populate: [
+          {
+            path: 'Links',
+            model: 'Links',
+          },
+        ],
+      });
       res.locals.userFound = user;
       return next();
     } catch (err) {
