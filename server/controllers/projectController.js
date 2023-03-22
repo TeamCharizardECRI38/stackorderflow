@@ -1,4 +1,4 @@
-const { Users, Projects, Links } = require('../database');
+const { Users, Projects, Links } = require("../database");
 
 const projectControllers = {
   createProject: async (req, res, next) => {
@@ -23,7 +23,7 @@ const projectControllers = {
         log: `Express error handler caught createProject error: ${err}`,
         status: 400,
         message: {
-          err: 'An error creating a new project from the provided data occurred',
+          err: "An error creating a new project from the provided data occurred",
         },
       };
 
@@ -49,7 +49,7 @@ const projectControllers = {
         log: `Express error handler caught addProjectToUser error: ${err}`,
         status: 400,
         message: {
-          err: 'An error associating a project with a user occurred',
+          err: "An error associating a project with a user occurred",
         },
       };
 
@@ -67,7 +67,7 @@ const projectControllers = {
         log: `Express error handler caught deleteProject error: ${err}`,
         status: 400,
         message: {
-          err: 'An error deleting a project occurred',
+          err: "An error deleting a project occurred",
         },
       };
 
