@@ -1,22 +1,44 @@
 const { Users } = require('../database');
 require('dotenv').config();
 
-userControllers = {
-  createUser: async (req, res, next) => {
+const userControllers = {
+  findUser: async (req, res, next) => {
     try {
-      const user = await Users.create({
-        Name: req.body.username,
-        Password: res.locals.password,
-      });
+      const id = req.body.userId;
+      const user = await Users.findById(id);
+      res.locals.userFound = user;
+      return next();
     } catch (err) {
       const errorMessage = {
-        log: `Express error handler caught in createUser middleware error: ${err}`,
+        log: `Express error handler caught in findUser middleware error: ${err}`,
         status: 400,
-        message: { err: 'Unable to create a new user' },
+        message: { err: 'Unable to find the user' },
       };
+      return next(errorMessage);
     }
   },
-  loginUser: async (req, res, next) => {},
-  checkDuplicates: async (req, res, next) => {},
-  encryptUserData: async (req, res, next) => {},
+  deleteUserProjects: async (req, res, next) => {
+    try {
+      const id = req.body.userId;
+
+      const user = await Users.findByIdAndUpdate(
+        id,
+        {
+          $pull: { Projects: req.body.projectId },
+        },
+        { new: true }
+      );
+      res.locals.user = user;
+      return next();
+    } catch (err) {
+      const errorMessage = {
+        log: `Express error handler caught in deleteUserProjects middleware error: ${err}`,
+        status: 400,
+        message: { err: 'Unable to delete project the user' },
+      };
+      return next(errorMessage);
+    }
+  },
 };
+
+module.exports = userControllers;
