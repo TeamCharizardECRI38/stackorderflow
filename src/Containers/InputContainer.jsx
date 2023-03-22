@@ -1,37 +1,38 @@
-import { useState } from "react";
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import ButtonUnstyled from "@mui/base/ButtonUnstyled";
+import { useState } from 'react';
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 
 import Autocomplete, {
   createFilterOptions,
-} from "@material-ui/lab/Autocomplete";
+} from '@material-ui/lab/Autocomplete';
 const filter = createFilterOptions();
 
 function InputContainer(props) {
   const { projects, tags, handleClickSubmit } = props;
-  const [link, setLink] = useState("");
-  const [proj, setProj] = useState("");
-  const [tagArr, setTagArr] = useState("");
+  console.log('projects', projects);
+  const [link, setLink] = useState('');
+  const [proj, setProj] = useState('');
+  const [tagArr, setTagArr] = useState('');
 
   return (
-    <div className="InputContainer">
+    <div className='InputContainer'>
       <h2>InputContainer</h2>
       <TextField
-        variant="outlined"
-        id="stackOverflowLink"
-        label="Paste link here"
+        variant='outlined'
+        id='stackOverflowLink'
+        label='Paste link here'
         fullWidth
         onChange={(e) => {
           setLink(e.target.value);
-          console.log("input link is", e.target.value);
+          console.log('input link is', e.target.value);
         }}
       />
       <Autocomplete
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
           // Suggest the creation of a new value
-          if (params.inputValue !== "") {
+          if (params.inputValue !== '') {
             filtered.push(`Add "${params.inputValue}"`);
           }
           return filtered;
@@ -41,7 +42,7 @@ function InputContainer(props) {
         handleHomeEndKeys
         options={projects}
         renderOption={(option) => option}
-        sx={{ display: "inline-flex", width: "50%" }}
+        sx={{ display: 'inline-flex', width: '50%' }}
         freeSolo
         onChange={(e, v) => {
           setProj(v);
@@ -50,9 +51,9 @@ function InputContainer(props) {
         renderInput={(params) => (
           <TextField
             {...params}
-            id="projects"
-            label="Select a project, or add a new project here" //make it clear for users that they should add projs here
-            variant="outlined"
+            id='projects'
+            label='Select a project, or add a new project here' //make it clear for users that they should add projs here
+            variant='outlined'
           />
         )}
       />
@@ -62,7 +63,7 @@ function InputContainer(props) {
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
           // Suggest the creation of a new value
-          if (params.inputValue !== "") {
+          if (params.inputValue !== '') {
             filtered.push(`Add "${params.inputValue}"`);
           }
           return filtered;
@@ -79,23 +80,23 @@ function InputContainer(props) {
         renderInput={(params) => (
           <TextField
             {...params}
-            id="tags"
-            variant="outlined"
-            label="filterSelectedOptions"
-            placeholder="Favorites"
+            id='tags'
+            variant='outlined'
+            label='filterSelectedOptions'
+            placeholder='Favorites'
           />
         )}
       />
 
       <div>
         <TextField
-          variant="outlined"
+          variant='outlined'
           multiline
           minRows={3}
           maxRows={4}
-          style={{ display: "inline-flex", width: "100%" }}
-          id="comments"
-          label="Comments"
+          style={{ display: 'inline-flex', width: '100%' }}
+          id='comments'
+          label='Comments'
         />
         <ButtonUnstyled
           onClick={(e) => {

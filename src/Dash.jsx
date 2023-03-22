@@ -1,40 +1,38 @@
-import { useState } from "react";
-import LinkContainer from "./Containers/LinkContainer.jsx";
-import InputContainer from "./Containers/InputContainer.jsx";
+import { useState } from 'react';
+import LinkContainer from './Containers/LinkContainer.jsx';
+import InputContainer from './Containers/InputContainer.jsx';
 
 function Dash(props) {
-  console.log(props);
-  const [links, setLinks] = useState(["http://localhost:5173/#/dash"]);
+  const projNames = props.userInfo.Projects.map((project) => project.Name);
+  const tagNames = props.userInfo.Projects.reduce((acc, curr) => {}, []);
+  console.log('projNames', projNames);
+  const [links, setLinks] = useState(['http://localhost:5173/#/dash']);
   const [tags, setTags] = useState([
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Vue",
+    'JavaScript',
+    'TypeScript',
+    'React',
+    'Vue',
   ]);
-  const [projects, setProjects] = useState([
-    "Project 1",
-    "Project 2",
-    "Project 3",
-  ]);
+  const [projects, setProjects] = useState(projNames);
 
   const handleClickSubmit = async (project, addedTags, link) => {
-    console.log("submitted", project, addedTags, link);
+    console.log('submitted', project, addedTags, link);
 
-    const linkRes = await fetch("http://localhost:3000/projects/createLink", {
-      method: "POST",
+    const linkRes = await fetch('http://localhost:3000/projects/createLink', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         link,
-        comment: "hi zak",
-        project,
+        comment: 'hi zak',
+        name: project,
         tags: addedTags,
-        userId: "6418bb589938c7e38f1c7fc5",
+        userId: props.userInfo._id,
       }),
     });
 
-    console.log("linkRes", await linkRes.json());
+    console.log('linkRes', await linkRes.json());
     // console.log("projRes", projResponse);
     // const newProjs = [...projResponse];
     // const newTags = [...tagResponse];
@@ -44,7 +42,7 @@ function Dash(props) {
   };
 
   return (
-    <div className="dash">
+    <div className='dash'>
       <h1>Dash</h1>
       <InputContainer
         projects={projects}

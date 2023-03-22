@@ -1,4 +1,4 @@
-const { Links, Projects } = require('../database');
+const { Links, Projects, Users } = require('../database');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
@@ -101,6 +101,32 @@ const linkControllers = {
       };
 
       return next(errMessage);
+    }
+  },
+  getAllLinks: async (req, res, next) => {
+    try {
+      const id = req.body.userId;
+
+      const projects = await Users.findById(id, 'Projects').populate({
+        path: 'Projects',
+        model: 'Projects',
+        populate: [
+          {
+            path: 'Links',
+            model: 'Links',
+          },
+        ],
+      });
+      const links = projects.Projects.map((project) => {
+        const projectLinks = project.Links.map((link) => {
+          return link.Tags;
+        });
+        return projectLinks;
+      });
+      res.locals.allLinks = links.flat(Infinity);
+      return next();
+    } catch (err) {
+      return next(err);
     }
   },
 };
