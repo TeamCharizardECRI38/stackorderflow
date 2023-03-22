@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import ButtonUnstyled from "@mui/base/ButtonUnstyled";
@@ -9,11 +9,15 @@ import Autocomplete, {
 const filter = createFilterOptions();
 
 function InputContainer(props) {
-  const { projects, tags, handleClickSubmit } = props;
+  const { userInfo, tags, handleClickSubmit } = props;
+  const userProjectNames = userInfo.Projects.map((Project) => Project.Name);
+  const [projects, setProjects] = useState(userProjectNames);
   const [link, setLink] = useState("");
   const [proj, setProj] = useState("");
   const [tagArr, setTagArr] = useState("");
   const [comm, setComm] = useState("");
+  const [inputProj, setInputProj] = useState("");
+  const [inputComm, setInputComm] = useState("");
 
   return (
     <div className="InputContainer">
@@ -35,7 +39,7 @@ function InputContainer(props) {
           const filtered = filter(options, params);
           // Suggest the creation of a new value
           if (params.inputValue !== "") {
-            filtered.push(`"${params.inputValue}"`);
+            filtered.push(`${params.inputValue}`);
           }
           return filtered;
         }}
@@ -46,9 +50,13 @@ function InputContainer(props) {
         renderOption={(option) => option}
         sx={{ display: "inline-flex", width: "50%" }}
         freeSolo
+        value={proj}
         onChange={(e, v) => {
           setProj(v);
           console.log(v);
+        }}
+        onInputChange={(_, newInputValue) => {
+          setInputProj(newInputValue);
         }}
         renderInput={(params) => (
           <TextField
@@ -66,7 +74,7 @@ function InputContainer(props) {
           const filtered = filter(options, params);
           // Suggest the creation of a new value
           if (params.inputValue !== "") {
-            filtered.push(`Add "${params.inputValue}"`);
+            filtered.push(`${params.inputValue}`);
           }
           return filtered;
         }}
@@ -77,7 +85,6 @@ function InputContainer(props) {
         filterSelectedOptions
         onChange={(e, v) => {
           setTagArr(v);
-          console.log(v);
         }}
         renderInput={(params) => (
           <TextField
@@ -101,6 +108,10 @@ function InputContainer(props) {
             setComm(e.target.value);
             console.log("input link is", e.target.value);
           }}
+          onInputChange={(_, newInputValue) => {
+            setInputComm(newInputValue);
+          }}
+          value={comm}
           id="comments"
           label="Comments"
         />

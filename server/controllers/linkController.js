@@ -16,6 +16,7 @@ const linkControllers = {
         // Favorite: favorite,
         TopAnswer: topAnswer,
       });
+
       res.locals.linkObj = linkObj;
 
       return next();
