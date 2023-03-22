@@ -41,7 +41,7 @@ function Dash(props) {
       );
       const linkRes = await response.json();
       // console.log("linkRes", linkRes);
-
+      setUserInfo(linkRes);
       // await setUserInfo(linkRes);
     } catch (err) {
       console.error('error creating a new link', err);

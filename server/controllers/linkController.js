@@ -70,6 +70,12 @@ const linkControllers = {
         .find('div[class="s-prose js-post-body"]')
         .html();
 
+      const css = $('div[data-position-on-page="1"]').find(
+        'div[class="s-prose js-post-body"]'
+      );
+
+      console.log(css);
+
       res.locals.title = title;
       res.locals.topAnswer = JSON.stringify(topAnswer);
       return next();
