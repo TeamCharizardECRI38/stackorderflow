@@ -10,6 +10,8 @@ function Dash(props) {
   console.log("uI prop -> projs", userProjectNames);
 
   const [tags, setTags] = useState([
+    //on the Links obj
+    //zach is creating a route that will get all the users tags, will use that route to populate this arr
     "JavaScript",
     "TypeScript",
     "React",

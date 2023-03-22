@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-require('dotenv').config();
 
+require("dotenv").config();
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to Mongo DB."))
+  .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
@@ -23,6 +23,7 @@ const linkSchema = new Schema({
 
 const Links = mongoose.model('Links', linkSchema);
 
+
 const projectSchema = new Schema({
   Name: { type: String, required: true },
   Links: [{ type: Schema.Types.ObjectId, ref: Links }],
@@ -30,13 +31,14 @@ const projectSchema = new Schema({
   Notes: { type: String },
 });
 
-const Projects = mongoose.model('Projects', projectSchema);
+const Projects = mongoose.model("Projects", projectSchema);
 
 const userSchema = new Schema({
   Name: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
   Projects: [{ type: Schema.Types.ObjectId, ref: Projects }],
 });
+
 
 const Users = mongoose.model('Users', userSchema);
 
