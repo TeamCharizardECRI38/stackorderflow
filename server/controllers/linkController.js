@@ -126,6 +126,40 @@ const linkControllers = {
       res.locals.allLinks = links.flat(Infinity);
       return next();
     } catch (err) {
+      const errMessage = {
+        log: `Express error handler caught getAllLinks error: ${err}`,
+        status: 400,
+        message: {
+          err: 'An error getting all links occurred',
+        },
+      };
+
+      return next(errMessage);
+    }
+  },
+  getAllLinks: async (req, res, next) => {
+    try {
+      const id = req.body.userId;
+
+      const projects = await Users.findById(id, 'Projects').populate({
+        path: 'Projects',
+        model: 'Projects',
+        populate: [
+          {
+            path: 'Links',
+            model: 'Links',
+          },
+        ],
+      });
+      const links = projects.Projects.map((project) => {
+        const projectLinks = project.Links.map((link) => {
+          return link.Tags;
+        });
+        return projectLinks;
+      });
+      res.locals.allLinks = links.flat(Infinity);
+      return next();
+    } catch (err) {
       return next(err);
     }
   },

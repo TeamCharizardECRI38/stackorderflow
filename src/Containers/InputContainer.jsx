@@ -10,15 +10,16 @@ const filter = createFilterOptions();
 
 function InputContainer(props) {
   const { projects, tags, handleClickSubmit } = props;
-  console.log('projects', projects);
   const [link, setLink] = useState('');
   const [proj, setProj] = useState('');
   const [tagArr, setTagArr] = useState('');
+  const [comm, setComm] = useState('');
 
   return (
     <div className='InputContainer'>
       <h2>InputContainer</h2>
       <TextField
+        //setup validation here
         variant='outlined'
         id='stackOverflowLink'
         label='Paste link here'
@@ -27,13 +28,14 @@ function InputContainer(props) {
           setLink(e.target.value);
           console.log('input link is', e.target.value);
         }}
+        value={link}
       />
       <Autocomplete
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
           // Suggest the creation of a new value
           if (params.inputValue !== '') {
-            filtered.push(`Add "${params.inputValue}"`);
+            filtered.push(`"${params.inputValue}"`);
           }
           return filtered;
         }}
@@ -82,7 +84,7 @@ function InputContainer(props) {
             {...params}
             id='tags'
             variant='outlined'
-            label='filterSelectedOptions'
+            label='Tags'
             placeholder='Favorites'
           />
         )}
@@ -95,6 +97,10 @@ function InputContainer(props) {
           minRows={3}
           maxRows={4}
           style={{ display: 'inline-flex', width: '100%' }}
+          onChange={(e) => {
+            setComm(e.target.value);
+            console.log('input link is', e.target.value);
+          }}
           id='comments'
           label='Comments'
         />
@@ -104,7 +110,12 @@ function InputContainer(props) {
             console.log(projects);
             console.log(tags);
             console.log(link);
-            handleClickSubmit(proj, tagArr, link);
+            console.log(comm);
+            handleClickSubmit(proj, tagArr, link, comm);
+            setLink('');
+            setProj('');
+            setTagArr('');
+            setComm('');
           }}
         >
           Submit

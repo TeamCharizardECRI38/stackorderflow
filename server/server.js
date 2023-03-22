@@ -4,9 +4,8 @@ const path = require('path');
 const cors = require('cors');
 const controller = require('./controllers/linkController');
 const projectRouter = require('./routes/projectRoutes');
-const linkRouter = require('./routes/linkRoutes');
-
 const jwt = require('jsonwebtoken');
+const linkRouter = require('./routes/linkRoutes');
 // const credentialController = require('./controllers/credentialController');
 // const jwt = require('jsonwebtoken');
 

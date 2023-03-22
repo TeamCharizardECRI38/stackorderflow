@@ -3,36 +3,49 @@ import LinkContainer from './Containers/LinkContainer.jsx';
 import InputContainer from './Containers/InputContainer.jsx';
 
 function Dash(props) {
-  const projNames = props.userInfo.Projects.map((project) => project.Name);
-  const tagNames = props.userInfo.Projects.reduce((acc, curr) => {}, []);
-  console.log('projNames', projNames);
-  const [links, setLinks] = useState(['http://localhost:5173/#/dash']);
+  const { userInfo, setUserInfo } = props;
+  const userProjectNames = userInfo.Projects.map((Project) => Project.Name);
+  const userId = userInfo._id;
+  const [projects, setProjects] = useState(userProjectNames);
+
+  console.log('uI prop -> projs', userProjectNames);
+
   const [tags, setTags] = useState([
+    //on the Links obj
+    //zach is creating a route that will get all the users tags, will use that route to populate this arr
     'JavaScript',
     'TypeScript',
     'React',
     'Vue',
   ]);
-  const [projects, setProjects] = useState(projNames);
 
-  const handleClickSubmit = async (project, addedTags, link) => {
+  const handleClickSubmit = async (project, addedTags, link, comment) => {
     console.log('submitted', project, addedTags, link);
 
-    const linkRes = await fetch('http://localhost:3000/projects/createLink', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        link,
-        comment: 'hi zak',
-        name: project,
-        tags: addedTags,
-        userId: props.userInfo._id,
-      }),
-    });
+    try {
+      const response = await fetch(
+        'http://localhost:3000/projects/createLink',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            link,
+            comment,
+            name: project,
+            tags: addedTags,
+            userId,
+          }),
+        }
+      );
+      const linkRes = await response.json();
+      // console.log("linkRes", linkRes);
 
-    console.log('linkRes', await linkRes.json());
+      // await setUserInfo(linkRes);
+    } catch (err) {
+      console.error('error creating a new link', err);
+    }
     // console.log("projRes", projResponse);
     // const newProjs = [...projResponse];
     // const newTags = [...tagResponse];
@@ -45,11 +58,17 @@ function Dash(props) {
     <div className='dash'>
       <h1>Dash</h1>
       <InputContainer
+        userInfo={userInfo}
         projects={projects}
         tags={tags}
         handleClickSubmit={handleClickSubmit}
       />
-      <LinkContainer projects={projects} tags={tags} />
+      <LinkContainer
+        projects={projects}
+        tags={tags}
+        userInfo={userInfo}
+        setUserInfo={setUserInfo}
+      />
     </div>
   );
 }
