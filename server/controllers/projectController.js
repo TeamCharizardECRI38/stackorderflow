@@ -41,17 +41,17 @@ const projectControllers = {
         },
         { new: true }
       ).populate({
-        path: 'Projects',
-        model: 'Projects',
+        path: "Projects",
+        model: "Projects",
         populate: [
           {
-            path: 'Links',
-            model: 'Links',
+            path: "Links",
+            model: "Links",
           },
         ],
       });
       //   res.locals.user = await user.populate('Projects');
-      console.log('user', user);
+      console.log("user", user);
       res.locals.user = user;
       //   const projects = await user
       //   console.log('user', projects);
@@ -96,12 +96,12 @@ const projectControllers = {
         },
         { new: true }
       ).populate({
-        path: 'Projects',
-        model: 'Projects',
+        path: "Projects",
+        model: "Projects",
         populate: [
           {
-            path: 'Links',
-            model: 'Links',
+            path: "Links",
+            model: "Links",
           },
         ],
       });
