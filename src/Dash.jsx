@@ -2,7 +2,8 @@ import { useState } from "react";
 import LinkContainer from "./Containers/LinkContainer.jsx";
 import InputContainer from "./Containers/InputContainer.jsx";
 
-function Dash() {
+function Dash(props) {
+  console.log(props);
   const [links, setLinks] = useState(["http://localhost:5173/#/dash"]);
   const [tags, setTags] = useState([
     "JavaScript",
@@ -16,43 +17,30 @@ function Dash() {
     "Project 3",
   ]);
 
-  const handleClickSubmit = async (project, addedTags, link, comments) => {
+  const handleClickSubmit = async (project, addedTags, link) => {
     console.log("submitted", project, addedTags, link);
-    //add condition to only do one or the other
-    //create both a new  proj AND a new Link
-    const projResponse = await fetch("/createProject", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: project,
-        link,
-        comment,
-        tags,
-      }),
-    });
 
-    const linkRes = await fetch("/createLink", {
+    const linkRes = await fetch("http://localhost:3000/projects/createLink", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        links,
-        comment,
+        link,
+        comment: "hi zak",
         project,
         tags: addedTags,
+        userId: "6418bb589938c7e38f1c7fc5",
       }),
     });
 
-    console.log("linkRes", linkRes);
-    console.log("projRes", projResponse);
-    const newProjs = [...projResponse];
-    const newTags = [...tagResponse];
+    console.log("linkRes", await linkRes.json());
+    // console.log("projRes", projResponse);
+    // const newProjs = [...projResponse];
+    // const newTags = [...tagResponse];
 
-    await setProjects(newProjs);
-    await setTags(newTags);
+    // await setProjects(newProjs);
+    // await setTags(newTags);
   };
 
   return (
