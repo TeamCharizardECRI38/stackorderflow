@@ -1,6 +1,6 @@
-import { useState } from "react";
-import LinkContainer from "./Containers/LinkContainer.jsx";
-import InputContainer from "./Containers/InputContainer.jsx";
+import { useState } from 'react';
+import LinkContainer from './Containers/LinkContainer.jsx';
+import InputContainer from './Containers/InputContainer.jsx';
 
 function Dash(props) {
   const { userInfo, setUserInfo } = props;
@@ -8,27 +8,27 @@ function Dash(props) {
   const userId = userInfo._id;
   const [projects, setProjects] = useState(userProjectNames);
 
-  console.log("uI prop -> projs", userProjectNames);
+  console.log('uI prop -> projs', userProjectNames);
 
   const [tags, setTags] = useState([
     //on the Links obj
     //zach is creating a route that will get all the users tags, will use that route to populate this arr
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "Vue",
+    'JavaScript',
+    'TypeScript',
+    'React',
+    'Vue',
   ]);
 
   const handleClickSubmit = async (project, addedTags, link, comment) => {
-    console.log("submitted", project, addedTags, link);
+    console.log('submitted', project, addedTags, link);
 
     try {
       const response = await fetch(
-        "http://localhost:3000/projects/createLink",
+        'http://localhost:3000/projects/createLink',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             link,
@@ -41,10 +41,10 @@ function Dash(props) {
       );
       const linkRes = await response.json();
       // console.log("linkRes", linkRes);
-
+      setUserInfo(linkRes);
       // await setUserInfo(linkRes);
     } catch (err) {
-      console.error("error creating a new link", err);
+      console.error('error creating a new link', err);
     }
     // console.log("projRes", projResponse);
     // const newProjs = [...projResponse];
@@ -55,7 +55,7 @@ function Dash(props) {
   };
 
   return (
-    <div className="dash">
+    <div className='dash'>
       <h1>Dash</h1>
       <InputContainer
         userInfo={userInfo}

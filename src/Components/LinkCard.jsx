@@ -1,41 +1,26 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import parse from 'html-react-parser';
 
 function LinkCard(props) {
   // const { projects, links, tags } = props;
-  const { userInfo, setUserInfo, chosenProject, setChosenProject } = props;
-  // iterate through projects array, find the object whose Name is the same as chosenProject, save to chosenProjObj;
-  console.log("userInfo.Projects", userInfo.Projects);
-  console.log("chosenProject: ", chosenProject);
-  let chosenProjObj;
-  for (let i = 0; i < userInfo.Projects.length; i++) {
-    let selectedProj = userInfo.Projects[i];
-    console.log("selectedProj.Name", selectedProj.Name);
-    if (selectedProj.Name === chosenProject) {
-      chosenProjObj = userInfo.Projects[i];
-    }
-  }
-  console.log("chosenProjObj inside LinkCard: ", chosenProjObj);
 
-  const linkArray = chosenProjObj.Links;
-
-  const linkCardsArray = [];
-
-  linkArray.forEach((link) => {
-    const markup = { __html: link.TopAnswer };
-    linkCardsArray.push(
-      <Card variant="outlined">
-        <h4 className="linkCardTitle">{link.Title}</h4>
-        <a href={link.Link}>Full Article Here</a>
-        <div
-          className="linkCardTopAnswer"
-          dangerouslySetInnerHTML={markup}
-        ></div>
-      </Card>
-    );
+  const { userInfo, setUserInfo } = props;
+  const tags = props.tags.map((tag) => {
+    return <li>{tag}</li>;
   });
 
-  return <div>{linkCardsArray}</div>;
+  return (
+    <Card variant='outlined' id={props.linkid}>
+      <h2>{props.title}</h2>
+      <div> {parse(JSON.parse(props.topAnswer))}</div>
+      <ul>{tags}</ul>
+      <h5>
+        <a href={props.link}>{props.link}</a>
+      </h5>
+    </Card>
+  );
+
 }
 
 //   const linkInfo = {
