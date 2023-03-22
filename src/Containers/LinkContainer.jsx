@@ -4,11 +4,12 @@ import LinkSidebar from "../Components/LinkSidebar.jsx";
 
 function LinkContainer(props) {
   const { projects, tags } = props;
+  const { userInfo, setUserInfo } = props;
   return (
     <div className="LinkContainer">
       <h2>LinkContainer</h2>
       <LinkCard />
-      <LinkSidebar />
+      <LinkSidebar userInfo={userInfo} setUserInfo={setUserInfo} />
     </div>
   );
 }

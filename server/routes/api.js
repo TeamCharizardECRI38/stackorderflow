@@ -32,6 +32,16 @@ router.post(
     Users.findOne({
       Name: res.locals.user,
     })
+      .populate({
+        path: "Projects",
+        model: "Projects",
+        populate: [
+          {
+            path: "Links",
+            model: "Links",
+          },
+        ],
+      })
       .then((user) => {
         console.log("user " + user);
         return res.status(200).json(user);
@@ -49,6 +59,16 @@ router.post(
     Users.findOne({
       Name: req.body.username,
     })
+      .populate({
+        path: "Projects",
+        model: "Projects",
+        populate: [
+          {
+            path: "Links",
+            model: "Links",
+          },
+        ],
+      })
       .then((user) => {
         console.log("fetched user info: ", user);
         if (req.body.password === user.Password) {

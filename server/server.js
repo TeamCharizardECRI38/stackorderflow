@@ -5,6 +5,7 @@ const cors = require("cors");
 const controller = require("./controllers/linkController");
 const projectRouter = require("./routes/projectRoutes");
 const jwt = require("jsonwebtoken");
+const linkRouter = require("./routes/linkRoutes");
 // const credentialController = require('./controllers/credentialController');
 // const jwt = require('jsonwebtoken');
 
@@ -33,6 +34,7 @@ app.use(express.static(path.resolve(__dirname, "../src")));
 
 app.use("/api", apiRouter);
 app.use("/projects", projectRouter);
+app.use("/links", linkRouter);
 
 // controller.scrapeLink();
 
